@@ -1,0 +1,22 @@
+# TODO List for Django CRL Project
+
+- [x] 1. Set up Python virtual environment in the current directory
+- [x] 2. Install Django
+- [x] 3. Create Django project 'crl' in current directory
+- [x] 4. Create Django apps: accounts, services, requests, reviews, core
+- [x] 5. Configure settings.py: add apps to INSTALLED_APPS, set up TEMPLATES and STATIC files
+- [x] 6. Define models:
+  - [x] accounts: extend User model if needed
+  - [x] services: ServiceCategory, ServiceProvider, Service
+  - [x] requests: AssistanceRequest
+  - [x] reviews: Review
+  - [x] core: no models needed
+- [ ] 7. Create views, templates, and URLs for each app
+- [ ] 8. Set up admin dashboard for managing providers, requests, reviews
+- [ ] 9. Implement user registration/login views
+- [ ] 10. Add search functionality for services
+- [ ] 11. Create forms for assistance requests and reviews
+- [x] 12. Run migrations: python manage.py makemigrations && python manage.py migrate
+- [x] 13. Create superuser: python manage.py createsuperuser
+- [x] 14. Run server: python manage.py runserver
+- [ ] 15. Test all features
