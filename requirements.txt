@@ -1,0 +1,8 @@
+Django==5.2.8
+# Pin Python version used for development
+# Python 3.13.7
+
+# Optional/test/dev tools you may want later
+# pytest
+# pytest-django
+# coverage

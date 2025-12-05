@@ -1,9 +1,9 @@
-﻿{% load static %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>About - Community Resource Link</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
@@ -16,6 +16,8 @@
             <a href="{% url 'contact' %}">Contact</a>
             {% if user.is_authenticated %}
                 <a href="{% url 'logout' %}">Logout</a>
+                <a href="{% url 'services' %}">Services</a>
+                <a href="{% url 'request_assistance' %}">Request Assistance</a>
             {% else %}
                 <a href="{% url 'login' %}">Login</a>
                 <a href="{% url 'register' %}">Register</a>
@@ -23,10 +25,52 @@
         </nav>
     </header>
 
-    <main>
-        <h2>About Us</h2>
-        <p>Community Resource Link (CRL) is a platform that connects people with reliable local services. We help you find verified service providers for all your needs, from water suppliers to electricians, hospitals, schools, and more.</p>
-        <p>Our mission is to build stronger communities by making it easy to access essential services and support local businesses.</p>
+    <main style="max-width: 900px; margin: 2rem auto; padding: 0 1rem;">
+        <h2>About Community Resource Link</h2>
+
+        <section>
+            <h3>Our Mission</h3>
+            <p>
+                Community Resource Link is dedicated to connecting community members with reliable, verified local services.
+                We believe in building trust and strengthening communities by making it easy to find and access the services
+                that matter most to you.
+            </p>
+        </section>
+
+        <section>
+            <h3>What We Do</h3>
+            <p>
+                We provide a platform where:
+            </p>
+            <ul>
+                <li>Service providers can showcase their expertise and reach more customers</li>
+                <li>Community members can easily discover verified, trusted services</li>
+                <li>Transactions are secure and transparent with M-Pesa integration</li>
+                <li>Feedback and ratings help build a trustworthy marketplace</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3>Our Values</h3>
+            <ul>
+                <li><strong>Trust:</strong> We verify all providers to ensure quality and reliability</li>
+                <li><strong>Community:</strong> We support local economies and strengthen neighborhoods</li>
+                <li><strong>Transparency:</strong> Clear pricing, honest reviews, and open communication</li>
+                <li><strong>Accessibility:</strong> Making services easy to find and affordable for everyone</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3>Get Started</h3>
+            <p>
+                Browse our <a href="{% url 'services' %}">services directory</a> to find what you need, or
+                {% if user.is_authenticated %}
+                    <a href="{% url 'request_assistance' %}">request assistance</a> from a verified provider.
+                {% else %}
+                    <a href="{% url 'login' %}">log in</a> to request assistance from a verified provider.
+                {% endif %}
+            </p>
+        </section>
     </main>
 
     <footer>
@@ -34,4 +78,3 @@
     </footer>
 </body>
 </html>
-
