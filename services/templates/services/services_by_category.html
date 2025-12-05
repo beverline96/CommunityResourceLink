@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Providers in {{ category.name }} - Community Resource Link</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        .provider { margin-bottom: 1.5rem; }
+        .provider h3 { margin: 0; }
+        .provider .services { margin-left: 1rem; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1><a href="{% url 'home' %}">Community Resource Link</a></h1>
+        <nav>
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'services:index' %}">Services</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Providers offering <em>{{ category.name }}</em></h2>
+
+        {% if providers %}
+            <ul>
+                {% for p in providers %}
+                    <li class="provider">
+                        <h3>{{ p.name }} {% if p.is_verified %}<small>(verified)</small>{% endif %}</h3>
+                        {% if p.description %}<p>{{ p.description }}</p>{% endif %}
+                        {% if p.contact_info %}
+                            <p>Contact: <a href="mailto:{{ p.contact_info }}">Email</a> · <span>{{ p.contact_info }}</span></p>
+                        {% endif %}
+
+                        <div class="services">
+                            <strong>Services:</strong>
+                            <ul>
+                                {% for s in p.service_set.all|dictsortreversed:"created_at" %}
+                                    {% if s.category.id == category.id %}
+                                        <li>
+                                            <a href="{% url 'services:service_detail' s.id %}">{{ s.name }}</a>
+                                            {% if s.price %} — ${{ s.price }}{% endif %}
+                                            <a href="{% url 'request_assistance' %}?service={{ s.id }}" class="btn">Request Assistance</a>
+                                        </li>
+                                    {% endif %}
+                                {% empty %}
+                                    <li>No services listed by this provider in this category.</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No providers found for this category.</p>
+        {% endif %}
+
+        <p><a href="{% url 'services:index' %}">Back to all services</a></p>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Community Resource Link.</p>
+    </footer>
+</body>
+</html>

@@ -1,10 +1,10 @@
-﻿{% load static %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About - Community Resource Link</title>
+    <title>Contact - Community Resource Link</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
@@ -24,9 +24,22 @@
     </header>
 
     <main>
-        <h2>About Us</h2>
-        <p>Community Resource Link (CRL) is a platform that connects people with reliable local services. We help you find verified service providers for all your needs, from water suppliers to electricians, hospitals, schools, and more.</p>
-        <p>Our mission is to build stronger communities by making it easy to access essential services and support local businesses.</p>
+        <h2>Contact Us</h2>
+        <p>If you have questions or need help, please email <a href="mailto:support@crl.example">support@crl.example</a> or use the form below.</p>
+
+        <form action="#" method="post">
+            {% csrf_token %}
+            <label for="name">Name</label><br>
+            <input type="text" id="name" name="name" required><br>
+
+            <label for="email">Email</label><br>
+            <input type="email" id="email" name="email" required><br>
+
+            <label for="message">Message</label><br>
+            <textarea id="message" name="message" rows="5" required></textarea><br>
+
+            <button type="submit">Send</button>
+        </form>
     </main>
 
     <footer>
@@ -34,4 +47,3 @@
     </footer>
 </body>
 </html>
-

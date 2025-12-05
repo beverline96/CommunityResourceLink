@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Payment Status - Community Resource Link</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        .payment-status { max-width: 600px; margin: 2rem auto; padding: 1.5rem; border: 1px solid #ddd; border-radius: 4px; }
+        .status-completed { background-color: #d4edda; border-color: #c3e6cb; }
+        .status-pending { background-color: #fff3cd; border-color: #ffeaa7; }
+        .status-failed { background-color: #f8d7da; border-color: #f5c6cb; }
+        .transaction-details { margin: 1.5rem 0; }
+        .transaction-details p { margin: 0.5rem 0; font-size: 0.95rem; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1><a href="{% url 'home' %}">Community Resource Link</a></h1>
+    </header>
+
+    <main>
+        <div class="payment-status status-{{ payment.status }}">
+            <h2>Payment Status</h2>
+
+            <div class="transaction-details">
+                <p><strong>Payment ID:</strong> {{ payment.id }}</p>
+                <p><strong>Amount:</strong> KES {{ payment.amount }}</p>
+                <p><strong>Phone:</strong> {{ payment.phone_number }}</p>
+                <p><strong>Status:</strong> <strong style="text-transform: uppercase;">{{ payment.get_status_display }}</strong></p>
+                <p><strong>Created:</strong> {{ payment.created_at|date:"M d, Y H:i" }}</p>
+
+                {% if transaction %}
+                    <hr>
+                    <h3>Transaction Details</h3>
+                    <p><strong>Receipt Number:</strong> {{ transaction.mpesa_receipt_number|default:"N/A" }}</p>
+                    <p><strong>Result Code:</strong> {{ transaction.result_code }}</p>
+                    <p><strong>Result:</strong> {{ transaction.result_desc }}</p>
+                    <p><strong>Transaction Date:</strong> {{ transaction.created_at|date:"M d, Y H:i" }}</p>
+                {% endif %}
+            </div>
+
+            {% if payment.status == 'completed' %}
+                <p style="color: green; font-weight: bold;">✓ Payment successful! Your service request has been confirmed.</p>
+            {% elif payment.status == 'pending' %}
+                <p style="color: orange; font-weight: bold;">⏳ Waiting for M-Pesa confirmation...</p>
+            {% elif payment.status == 'failed' %}
+                <p style="color: red; font-weight: bold;">✗ Payment failed. Please try again.</p>
+            {% endif %}
+        </div>
+
+        <p><a href="{% url 'services:index' %}">Back to Services</a></p>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Community Resource Link.</p>
+    </footer>
+</body>
+</html>

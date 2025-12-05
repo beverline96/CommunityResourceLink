@@ -10,4 +10,7 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'), 
     path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
     path('services/', views.services, name='services'),
+
+    path('my-requests/', views.my_requests, name='my_requests'),
+    path('category/<int:category_id>/', views.services_by_category, name='services_by_category'),
 ]

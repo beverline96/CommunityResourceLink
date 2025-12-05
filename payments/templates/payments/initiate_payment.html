@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Initiate Payment - Community Resource Link</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        .payment-form { max-width: 500px; margin: 2rem auto; padding: 1rem; border: 1px solid #ddd; border-radius: 4px; }
+        .form-group { margin-bottom: 1rem; }
+        label { display: block; font-weight: bold; margin-bottom: 0.5rem; }
+        input[type="text"], input[type="email"], input[type="tel"], input[type="number"] { width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; }
+        button { background-color: #007bff; color: white; padding: 0.5rem 1rem; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1><a href="{% url 'home' %}">Community Resource Link</a></h1>
+    </header>
+
+    <main>
+        <h2>Initiate M-Pesa Payment</h2>
+
+        {% if service %}
+            <p><strong>Service:</strong> {{ service.name }}</p>
+            <p><strong>Provider:</strong> {{ service.provider.name }}</p>
+        {% endif %}
+
+        <form method="post" class="payment-form">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="amount">Amount (KES)</label>
+                <input type="number" id="amount" name="amount" step="0.01" value="{% if service.price %}{{ service.price }}{% else %}100.00{% endif %}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone_number">M-Pesa Phone Number (254XXXXXXXXX)</label>
+                <input type="tel" id="phone_number" name="phone_number" placeholder="254712345678" required>
+            </div>
+
+            <button type="submit">Proceed to Payment</button>
+        </form>
+
+        <p><a href="{% url 'services:index' %}">Back to Services</a></p>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Community Resource Link.</p>
+    </footer>
+</body>
+</html>

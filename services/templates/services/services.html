@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Services - Community Resource Link</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Community Resource Link</h1>
+        <nav>
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'about' %}">About</a>
+            <a href="{% url 'contact' %}">Contact</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Services</h2>
+        <p>Browse available services and verified providers.</p>
+
+        <section class="filters">
+            <form method="get" action="">
+                <input type="text" name="q" placeholder="Search services or providers" value="{{ q|default_if_none:'' }}">
+                <select name="category">
+                    <option value="">All categories</option>
+                    {% for cat in categories %}
+                        <option value="{{ cat.id }}" {% if selected_category and cat.id == selected_category.id %}selected{% endif %}>{{ cat.name }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit">Search</button>
+            </form>
+        </section>
+
+        <div class="service-list">
+            {% if services %}
+                <ul>
+                {% for s in services %}
+                    <li class="service-item">
+                        <h3><a href="{% url 'services:service_detail' s.id %}">{{ s.name }}</a></h3>
+                        <p>{{ s.description|truncatechars:140 }}</p>
+                        <p><strong>Provider:</strong> {{ s.provider.name }}</p>
+                        <p><strong>Category:</strong> {{ s.category.name }}</p>
+                        {% if s.price %}<p><strong>Price:</strong> ${{ s.price }}</p>{% endif %}
+                        {% if s.provider.contact_info %}
+                            <p><strong>Contact:</strong> <a href="mailto:{{ s.provider.contact_info }}">Email</a> · <span>{{ s.provider.contact_info }}</span></p>
+                        {% endif %}
+                        <p><a class="btn" href="{% url 'request_assistance' %}?service={{ s.id }}">Request Assistance</a></p>
+                    </li>
+                {% endfor %}
+                </ul>
+
+                {% if page_obj.has_other_pages %}
+                    <nav class="pagination">
+                        {% if page_obj.has_previous %}
+                            <a href="?{% if q %}q={{ q }}&amp;{% endif %}{% if selected_category %}category={{ selected_category.id }}&amp;{% endif %}page={{ page_obj.previous_page_number }}">Previous</a>
+                        {% endif %}
+                        <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+                        {% if page_obj.has_next %}
+                            <a href="?{% if q %}q={{ q }}&amp;{% endif %}{% if selected_category %}category={{ selected_category.id }}&amp;{% endif %}page={{ page_obj.next_page_number }}">Next</a>
+                        {% endif %}
+                    </nav>
+                {% endif %}
+
+            {% else %}
+                <p>No services available right now.</p>
+            {% endif %}
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Community Resource Link. All rights reserved.</p>
+    </footer>
+</body>
+</html>

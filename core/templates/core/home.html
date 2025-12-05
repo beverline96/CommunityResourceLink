@@ -18,7 +18,7 @@
             {% if user.is_authenticated %}
                 <a href="{% url 'logout' %}">Logout</a>
                 <a href="{% url 'services' %}">Services</a>
-                <a href="{% url 'my_requests' %}">My Requests</a>
+                <a href="{% url 'request_assistance' %}">Request Assistance</a>
             {% else %}
                 <a href="{% url 'login' %}">Login</a>
                 <a href="{% url 'register' %}">Register</a>
@@ -26,22 +26,25 @@
         </nav>
     </header>
 
-    <main>
-        <h2>Welcome to Community Resource Link</h2>
-        <p>Find reliable local services and connect with verified providers in your community.</p>
+    <div class="hero" style="background-image: url('{% static "images/home-bg.jpg" %}');">
+        <div class="overlay"></div>
+        <main>
+            <h2>Welcome to Community Resource Link</h2>
+            <p>Find reliable local services and connect with verified providers in your community.</p>
         <div class="service-categories">
             <h3>Service Categories</h3>
             <ul>
-                <li><a href="{% url 'services_by_category' category='health' %}">Health</a></li>
-                <li><a href="{% url 'services_by_category' category='utility' %}">Utility</a></li>
-                <li><a href="{% url 'services_by_category' category='security' %}">Security</a></li>
-                <li><a href="{% url 'services_by_category' category='repairs' %}">Repairs</a></li>
+                <li><a href="{% url 'services_by_category' 1 %}">Health</a></li>
+                <li><a href="{% url 'services_by_category' 2 %}">Utility</a></li>
+                <li><a href="{% url 'services_by_category' 3 %}">Security</a></li>
+                <li><a href="{% url 'services_by_category' 4 %}">Repairs</a></li>
             </ul>
         </div>
         {% if user.is_authenticated %}
             <a href="{% url 'request_assistance' %}" class="btn">Request Assistance</a>
         {% endif %}
-    </main>
+        </main>
+    </div>
 
     <footer>
         <p>&copy; 2025 Community Resource Link. All rights reserved.</p>

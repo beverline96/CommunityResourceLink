@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ service.name }} - Community Resource Link</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1><a href="{% url 'home' %}">Community Resource Link</a></h1>
+    </header>
+
+    <main>
+        <article class="service-detail">
+            <h2>{{ service.name }}</h2>
+            <p><strong>Category:</strong> {{ service.category.name }}</p>
+            <p>{{ service.description }}</p>
+            {% if service.price %}<p><strong>Price:</strong> ${{ service.price }}</p>{% endif %}
+
+            <section class="provider">
+                <h3>Provider: {{ service.provider.name }}</h3>
+                {% if service.provider.contact_info %}
+                    <p>Contact: <a href="mailto:{{ service.provider.contact_info }}">Email</a> • <span>{{ service.provider.contact_info }}</span></p>
+                {% endif %}
+                {% if service.provider.location %}
+                    <p>Location: {{ service.provider.location }}</p>
+                {% endif %}
+            </section>
+
+            <p><a class="btn" href="{% url 'request_assistance' %}?service={{ service.id }}">Request Assistance</a></p>
+            <p><a href="{% url 'services:index' %}">Back to services</a></p>
+        </article>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Community Resource Link.</p>
+    </footer>
+</body>
+</html>
